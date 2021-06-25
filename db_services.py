@@ -47,7 +47,7 @@ def read_from_db(tbl_name):
     except:
         print('Caught some error')
 
-print('This is DB services')
+print('Today is Friday.This is DB services')
 #read_from_db('choice')
 #write_to_choice_db(rec= [8817,'Majenta'])
 #write_to_reg_db('Mohanan')
