@@ -2,19 +2,21 @@
 import mysql.connector
 
 
+print ('Inside DB Services')
+
 def get_db_conn():
-    cnx = mysql.connector.connect(user="root", passwd="password",
-                                  host="localhost",
+    cnx = mysql.connector.connect(user="raghuiy", passwd="@Krishna10",
+                                  host="10.1.3.55",
                                   database="malan",
-                                  auth_plugin='mysql_native_password')
+                                  auth_plugin="mysql_native_password")
 
     return(cnx)
 
-def write_to_db(tbl_name, rec):
+def write_to_choice_db(rec):
     cnx=get_db_conn()
     cur = cnx.cursor()
-    sql="insert into " + tbl_name + " values (%s,%s,%s)"
-
+    sql="insert into  choice(regid,color)  values(%s,%s)"
+    print('Rec value is: ', rec)
     cur.execute(sql,rec)
     cnx.commit()
     read_from_db('choice')
@@ -22,12 +24,13 @@ def write_to_db(tbl_name, rec):
 def write_to_reg_db(visitor_name):
     cnx=get_db_conn()
     cur = cnx.cursor()
-    sql="insert into regs (name)  values('" +visitor_name+"')"
-    print('***Sql= ', sql)
+    sql="insert into REG(name) values ( %s )"
+    #print('***Sql= ', sql)
+    rec=[visitor_name]
     #rec=visitor_name
-    cur.execute(sql)
+    cur.execute(sql,rec)
     cnx.commit()
-    read_from_db('regs')
+    read_from_db('REG')
 
 
 def read_from_db(tbl_name):
@@ -45,5 +48,7 @@ def read_from_db(tbl_name):
         print('Caught some error')
 
 print('This is DB services')
-#write_to_db('choice',rec= ('296','Plony','Voilet'))
-#write_to_reg_db('Roha')
+#read_from_db('choice')
+#write_to_choice_db(rec= [8817,'Majenta'])
+#write_to_reg_db('Mohanan')
+
