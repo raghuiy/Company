@@ -10,11 +10,11 @@ app=Flask(__name__)
 app.secret_key = 'the random string'
 Registrants={}
 Colors=['Silver', 'Blue','Green', 'Orange', 'Pink', 'Yellow','Violet']
-largeFile='/Users/raghunathiyer/PycharmProjects/words.txt'
-WORDS=[]
-with open(largeFile, "r") as file:
-    for line in file.readlines():
-        WORDS.append(line.rstrip())
+#largeFile='/Users/raghunathiyer/PycharmProjects/words.txt'
+#WORDS=[]
+#with open(largeFile, "r") as file:
+ #   for line in file.readlines():
+ #       WORDS.append(line.rstrip())
 
 
 
@@ -46,8 +46,8 @@ def render():
 def showResultsPg():
     col=request.args.get('favColor')
     Registrants.update({session['gr_name']: col})
-    #db_services.write_to_db(choice,)
-    #print('Col= ',col ,' and ',session.get('gr_name'))
+    db_services.write_to_choice_db([3,col])
+    print('Col= ',col ,' and ',session.get('gr_name'))
     #Registrants.append(kvp)
     return render_template('results.html', f_col=col,person=session.get('gr_name'))
 
@@ -78,9 +78,21 @@ def showPureJSResults():
 def JSsearch():
         return render_template('pureJS.html')
 
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
+
 
 
 
 if __name__== '__main__':
     app.debug=True
     app.run(host="0.0.0.0", port=5000)
+
