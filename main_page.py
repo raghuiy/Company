@@ -1,9 +1,8 @@
-import db_services
-import  db_services as db
+import db_services as db
 from flask import Flask, render_template, request, session
 
 print('Hello Worlds')
-#db.write_to_db()
+
 
 #from FILE import file
 app=Flask(__name__)
@@ -36,8 +35,9 @@ def render():
     elif ((request.method =='POST')):
         grx_name = request.form.get('user')
         print('grx name is:', grx_name)
-        db.write_to_reg_db(grx_name)
+        reg_id=db.write_to_reg_db(grx_name)
     session['gr_name'] = grx_name
+    session['reg_id'] = reg_id
     #print('Input from browser is :', grx_name)
 
     return render_template('greet.html',pr_name=grx_name, t_colours=Colors)
@@ -46,13 +46,16 @@ def render():
 def showResultsPg():
     col=request.args.get('favColor')
     Registrants.update({session['gr_name']: col})
-    db_services.write_to_choice_db([3,col])
+
+
+    choice_id=db.write_to_choice_db([session['reg_id'],col])
     print('Col= ',col ,' and ',session.get('gr_name'))
     #Registrants.append(kvp)
     return render_template('results.html', f_col=col,person=session.get('gr_name'))
 
 @app.route('/showRegistrants')
 def showRegistrants():
+    Registrants=db.read_from_db('choice', pWhr_Clause="INNER_JOIN")
     return render_template('registrants.html',RG=Registrants)
 
 
@@ -94,5 +97,6 @@ def shutdown():
 
 if __name__== '__main__':
     app.debug=True
-    app.run(host="0.0.0.0", port=5000)
+    #app.run(host="0.0.0.0", port=5000)
+    app.run(host="localhost", port=5000)
 

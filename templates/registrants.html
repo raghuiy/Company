@@ -1,20 +1,26 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1> Welcome to Registrants
+<h1 align ='Center'> Welcome to Registrants
 </h1>
-<table border="2"> <div class="">
+<br><br>
+<table  align="center" style='border:2px solid red'>
+<tr align='center' style='border:2px solid red'><th   border:2px solid red'> Choice id</th> <th style='border:2px solid red'> Reg_id</th><th style='border:2px solid red'> Color</th>
+   </tr>
 
-    <tr><th> Name</th><th> Color</th>
+
+{% for rows in RG %}
+<tr style='border:1px solid red'>
+    {% for cell in rows %}
+ <td style='border:1px solid red' align="center"> {{ cell }} </td>
+
+    {%endfor%}
     </tr>
-
-<tr>
-{% for key, value in RG.items() %}
- <td> {{ key }} </td>
-    <td> {{ value }}</td>
-</tr>
 {%endfor%}
 </div>
 </table>
-Click  <a href="/Sirs"><b>here</b></a> to go back to first page
-{% endblock %}
+
+<br><br><br>
+<p align ='Center'>Click  <a href="/Sirs"><b>here</b></a> to go back to first page
+</p>
+    {% endblock %}
