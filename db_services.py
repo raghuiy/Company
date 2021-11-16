@@ -1,9 +1,9 @@
 import mysql.connector
 
 # This host name is for OCI
-host_name = "10.1.3.55"
+host_name = "192.168.1.87"
 # This host name is for local machine
-host_name = 'localhost'
+#host_name = 'localhost'
 print('Inside DB Services')
 
 
@@ -47,17 +47,17 @@ def read_from_db(tbl_name, pWhr_Clause=""):
         fetch_cursor = cnx.cursor()
         print('This is the recd whr clause ' + pWhr_Clause)
         if (pWhr_Clause == "INNER_JOIN"):
-            sql = 'select reg.regid,reg.name , color ' \
+            sql = 'select REG.regid,REG.name , color ' \
                   'from choice ' \
-                  'inner join reg on choice.regid=reg.regid ' \
-                  'order by reg.name'
+                  'inner join REG on choice.regid=REG.regid ' \
+                  'order by REG.name'
         else:
             sql = "select * from " + tbl_name
-        print('The sql was= ', sql)
+            print('The sql was= ', sql)
         fetch_cursor.execute(sql)
         result = fetch_cursor.fetchall()
-        #for row in result:
-         #   print('Here is the printed row: ', row)
+    #for row in result:
+     #   print('Here is the printed row: ', row)
     except:
         print('Caught some error')
     finally:
@@ -65,7 +65,7 @@ def read_from_db(tbl_name, pWhr_Clause=""):
         return result
 
 
-print('Today is Wedneday-28-Jul-2021.This is DB services')
+print('Today is Tue16-Nov-2021.This is DB services')
 # read_from_db('choice')
 # write_to_choice_db(rec= [8817,'Majenta'])
 # write_to_reg_db('Mohanan')
